@@ -1,0 +1,16 @@
+{
+  "name": "original-stitch",
+  "set": "psc-0.11.7-20180418",
+  "source": "https://github.com/purescript/package-sets.git",
+  "depends": [
+    "refs",
+    "foreign-generic",
+    "generics-rep",
+    "js-date",
+    "psci-support",
+    "console",
+    "eff",
+    "express",
+    "prelude"
+  ]
+}

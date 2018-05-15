@@ -1,0 +1,30 @@
+{
+  "name": "original-stitch",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "devDependencies": {
+    "nodemon": "^1.17.4",
+    "psc-package": "^0.3.2",
+    "pscid": "^2.5.3",
+    "pulp": "^12.2.0",
+    "purescript": "^0.11.7",
+    "purescript-psa": "^0.6.0",
+    "purs-loader": "^3.1.1",
+    "webpack": "^4.8.1",
+    "webpack-cli": "^2.1.3",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "uuid": "^3.2.1"
+  },
+  "scripts": {
+    "postinstall": "$(yarn bin)/psc-package install",
+    "clean": "rm -Rf .pulp-cache dist output",
+    "build": "yarn clean && $(yarn bin)/pulp build",
+    "start": "$(yarn bin)/pulp run",
+    "watch": "$(yarn bin)/pulp --watch run",
+    "ide": "$(yarn bin)/pscid",
+    "test": "$(yarn bin)/pulp test"
+  }
+}
