@@ -28,7 +28,7 @@ $ yarn <command>
 | `watch` | Watch for file changes, rebuild the bundles and restart the server |
 | `ide` | Start the interactive development tool |
 | `start` | Run the server |
-| `test` | Run the tests |
+| `test` | Run the tests (currently no tests) |
 
 ### Further reading
 
