@@ -15,7 +15,9 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.2",
+    "jsonwebtoken": "^8.2.1",
     "uuid": "^3.2.1"
   },
   "scripts": {

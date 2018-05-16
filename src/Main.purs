@@ -1,13 +1,14 @@
 module Main where
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Ref (REF)
-import Node.Express.Types (EXPRESS)
+
 import Api.Server (runServer)
+import Api.Types (ApiEffects)
+import Control.Monad.Eff (Eff)
+import Node.Express.Types (EXPRESS)
 
 
-main :: forall e. Eff ( ref :: REF, express :: EXPRESS | e ) Unit
+main :: forall e. Eff (ApiEffects ( express :: EXPRESS | e )) Unit
 main = runServer port
   where
     port = 8080

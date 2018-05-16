@@ -2,7 +2,6 @@ module Data.UUID where
 
 import Prelude (class Eq, class Ord, class Show, bind, compare, eq, pure, ($))
 import Control.Monad.Eff (Eff, kind Effect)
-import Data.Newtype (class Newtype)
 import Data.Foreign.Class (class Decode, class Encode)
 import Data.Foreign.Generic (defaultOptions, genericDecode, genericEncode)
 import Data.Generic.Rep (class Generic)
@@ -11,8 +10,6 @@ import Data.Generic.Rep (class Generic)
 foreign import data GENUUID :: Effect
 
 newtype UUID = UUID String
-
-derive instance newtypeUUID :: Newtype UUID _
 
 derive instance genericUUID :: Generic UUID _
 
