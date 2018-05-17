@@ -2,7 +2,7 @@ module Api.Server where
 
 import Prelude
 
-import Api.Handlers (getUsers, registerUser)
+import Api.Handlers (getUsers, loginUser, registerUser)
 import Api.Middleware.BodyParser (jsonBodyParser, urlencodedBodyParser)
 import Api.Persistence (Store, createStore)
 import Api.Types (ApiEffects)
@@ -27,7 +27,7 @@ app store = do
   useExternal urlencodedBodyParser
 
   post  "/register" $ registerUser store
-  post  "/login"    $ registerUser store
+  post  "/login"    $ loginUser store
   get   "/users"    $ getUsers store
 
   all "/*" do
