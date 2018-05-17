@@ -149,7 +149,7 @@ loginUser store = sendApiResponse do
         <$> validEmail EmailIsEmpty request.email
         <*> notEmpty PasswordIsEmpty request.password
 
-    updateLastLogin ::User -> ApiHandler e
+    updateLastLogin :: User -> ApiHandler e
     updateLastLogin (User { id }) = do
       currentTime <- handleEff now >>= toString >>> pure
       handleAff $ updateUser store id \(User user) -> Just $ User $ user { lastLoginAt = currentTime }
