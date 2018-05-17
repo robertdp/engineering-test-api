@@ -36,6 +36,12 @@ $ yarn <command>
 | `start` | Run the server |
 | `test` | Run the tests (currently no tests) |
 
+### Todo
+
+- Logging
+- Metrics
+- Refactoring and DSL development
+
 ### Further reading
 
 **PureScript By Example**  
