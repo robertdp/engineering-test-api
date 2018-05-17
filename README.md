@@ -12,11 +12,13 @@ Then install the server dependencies:
 $ yarn install
 ```
 
-And finally to build and run the server:
+And finally, to build and run the server:
 
 ```
 $ yarn
 ```
+
+Note: You might need to disable CORS in your browser for the client-side app to communicate with the API.
 
 #### Command listing
 
