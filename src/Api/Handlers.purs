@@ -107,6 +107,9 @@ registerUser store = sendApiResponse do
         <*> notEmpty EmailIsEmpty request.email
         <*> notEmpty PasswordIsEmpty request.password
 
+    userFromRequest
+      :: { first_name :: String, last_name :: String, password :: String, email :: String }
+      -> HandlerM (ApiEffects e) User
     userFromRequest request = handleEff do
       uuid <- generateUUID
       currentTime <- now >>= toString >>> pure
