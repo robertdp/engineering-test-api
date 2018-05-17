@@ -3,7 +3,7 @@ module Api.Handlers where
 import Prelude
 
 import Api.Persistence (Store, findUser, insertUser, listUsers, updateUser)
-import Api.Types (User(..), UserLoginRequest(..), UserLoginResponse(..), UserRegisterRequest(..), UserResponse(..), ApiEffects)
+import Api.Types (ApiEffects, User(User), UserLoginRequest(UserLoginRequest), UserLoginResponse(UserLoginResponse), UserRegisterRequest(UserRegisterRequest), UserResponse, mapUserToResponse)
 import Api.Validation (notEmpty, validEmail)
 import Control.Monad.Aff (Aff)
 import Control.Monad.Eff (Eff)
@@ -50,35 +50,34 @@ sendApiResponse handler = do
   send $ response { result = encode response.result }
   end
 
-  where
-    mapResponse :: ApiResponseType a -> ApiResponse a
-    mapResponse = case _ of
-      Success a ->
-        emptyResponse { result = NullOrUndefined $ Just a }
-      Created a ->
-        emptyResponse { result = NullOrUndefined $ Just a, status = 201 }
-      BadRequest err ->
-        emptyResponse { code = 14, message = err, status = 400 }
-      InternalServerError ->
-        emptyResponse { code = 14, message = "Internal server error", status = 500 }
-      EmailNotFound ->
-        emptyResponse { message = "User email was not found", code = 31 }
-      PasswordDoesNotMatch ->
-        invalidRequest { message = "User passwords do not match", code = 32 }
-      EmailAlreadyExists ->
-        invalidRequest { message = "User email already exists", code = 30 }
-      NameIsEmpty ->
-        invalidRequest { message = "User name cannot be empty", code = 2 }
-      EmailIsEmpty ->
-        invalidRequest { message = "User email cannot be empty", code = 3 }
-      PasswordIsEmpty ->
-        invalidRequest { message = "User password cannot be empty", code = 4 }
+mapResponse :: forall a. ApiResponseType a -> ApiResponse a
+mapResponse = case _ of
+  Success a ->
+    emptyResponse { result = NullOrUndefined $ Just a }
+  Created a ->
+    emptyResponse { result = NullOrUndefined $ Just a, status = 201 }
+  BadRequest err ->
+    emptyResponse { code = 14, message = err, status = 400 }
+  InternalServerError ->
+    emptyResponse { code = 14, message = "Internal server error", status = 500 }
+  EmailNotFound ->
+    emptyResponse { message = "User email was not found", code = 31 }
+  PasswordDoesNotMatch ->
+    invalidRequest { message = "User passwords do not match", code = 32 }
+  EmailAlreadyExists ->
+    invalidRequest { message = "User email already exists", code = 30 }
+  NameIsEmpty ->
+    invalidRequest { message = "User name cannot be empty", code = 2 }
+  EmailIsEmpty ->
+    invalidRequest { message = "User email cannot be empty", code = 3 }
+  PasswordIsEmpty ->
+    invalidRequest { message = "User password cannot be empty", code = 4 }
 
-    emptyResponse :: ApiResponse a
-    emptyResponse = { code: 0, message: "", result: NullOrUndefined Nothing, status: 200 }
+emptyResponse :: forall a. ApiResponse a
+emptyResponse = { code: 0, message: "", result: NullOrUndefined Nothing, status: 200 }
 
-    invalidRequest :: ApiResponse a
-    invalidRequest = emptyResponse { status = 422 }
+invalidRequest :: forall a. ApiResponse a
+invalidRequest = emptyResponse { status = 422 }
 
 getUsers :: forall e. Store -> ApiHandler e
 getUsers store = sendApiResponse $ handleAff do
@@ -169,15 +168,4 @@ handleAff a = HandlerM \_ _ _ -> a
 handleEff :: forall e a. Eff e a -> HandlerM e a
 handleEff a = HandlerM \_ _ _ -> liftEff a
 
--- | Transform internal user representation to "public" representation
-mapUserToResponse :: User -> UserResponse
-mapUserToResponse (User user) =
-  UserResponse
-    { created_at : user.createdAt
-    , id : user.id
-    , last_login_at : user.lastLoginAt
-    , updated_at : user.updatedAt
-    , email : user.email
-    , is_admin : user.isAdmin
-    , name : user.firstName <> " " <> user.lastName
-    }
+

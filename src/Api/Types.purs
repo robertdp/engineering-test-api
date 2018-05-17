@@ -86,3 +86,17 @@ instance showUserResponse :: Show UserResponse where
 
 instance encodeUserResponse :: Encode UserResponse where
   encode = genericEncode $ defaultOptions { unwrapSingleConstructors = true }
+
+
+-- | Transform internal user representation to "public" representation
+mapUserToResponse :: User -> UserResponse
+mapUserToResponse (User user) =
+  UserResponse
+    { created_at : user.createdAt
+    , id : user.id
+    , last_login_at : user.lastLoginAt
+    , updated_at : user.updatedAt
+    , email : user.email
+    , is_admin : user.isAdmin
+    , name : user.firstName <> " " <> user.lastName
+    }
