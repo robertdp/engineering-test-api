@@ -31,7 +31,7 @@ validEmail err value =
   else
     invalid $ pure err
   where
-    emailRegex = unsafeRegexFromString "^[^@]+@[^@]+.[^@]+$"
+    emailRegex = unsafeRegexFromString "^[^@]+@[^@]+$"
 
 equalValues :: forall a b. Eq b => a -> b -> b -> Validated a b
 equalValues err a b =
